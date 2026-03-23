@@ -1,0 +1,395 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>About – Aydan Nelson</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--deep-space: #03040a;
+			--nebula-purple: #1a0630;
+			--crimson: #8b0030;
+			--bright-crimson: #c0003f;
+			--star-white: #e8eaf0;
+			--dim-star: #8899aa;
+			--accent-teal: #00c9b1;
+			--card-bg: rgba(255,255,255,0.04);
+			--border: rgba(255,255,255,0.08);
+		}
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		body {
+			background: var(--deep-space);
+			color: var(--star-white);
+			font-family: 'Exo 2', sans-serif;
+			overflow-x: hidden;
+		}
+		body::before {
+			content: '';
+			position: fixed; inset: 0;
+			background-image:
+				radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.7) 0%, transparent 100%),
+				radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.5) 0%, transparent 100%),
+				radial-gradient(1px 1px at 65% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+				radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+				radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,0.6) 0%, transparent 100%),
+				radial-gradient(2px 2px at 90% 30%, rgba(200,220,255,0.4) 0%, transparent 100%),
+				radial-gradient(1px 1px at 55% 50%, rgba(255,255,255,0.3) 0%, transparent 100%);
+			pointer-events: none; z-index: 0;
+		}
+		nav {
+			position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+			background: rgba(3,4,10,0.85);
+			backdrop-filter: blur(12px);
+			border-bottom: 1px solid var(--border);
+			display: flex; align-items: center;
+			padding: 0 2rem; height: 64px;
+		}
+		.nav-logo {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 1.1rem; font-weight: 900;
+			color: var(--star-white); text-decoration: none;
+			letter-spacing: 0.1em; margin-right: auto;
+		}
+		.nav-logo span { color: var(--bright-crimson); }
+		nav ul { list-style: none; display: flex; }
+		nav ul li a {
+			display: block; padding: 0 1.1rem; line-height: 64px;
+			color: var(--dim-star); text-decoration: none;
+			font-size: 0.85rem; font-weight: 600;
+			letter-spacing: 0.08em; text-transform: uppercase;
+			transition: color 0.2s;
+		}
+		nav ul li a:hover, nav ul li.active a { color: var(--star-white); }
+		nav ul li.active a { border-bottom: 2px solid var(--bright-crimson); }
+ 
+		.page-hero {
+			padding: 9rem 2rem 4rem;
+			text-align: center;
+			background: radial-gradient(ellipse at 50% 0%, rgba(139,0,48,0.2) 0%, transparent 60%);
+			position: relative; z-index: 1;
+		}
+		.page-hero .eyebrow {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.65rem; letter-spacing: 0.35em;
+			color: var(--accent-teal); text-transform: uppercase;
+			margin-bottom: 1rem;
+		}
+		.page-hero h1 {
+			font-family: 'Orbitron', sans-serif;
+			font-size: clamp(2.5rem, 6vw, 4.5rem);
+			font-weight: 900; line-height: 1;
+			margin-bottom: 1rem;
+		}
+		.page-hero p {
+			color: var(--dim-star); font-size: 1rem;
+			max-width: 500px; margin: 0 auto;
+			line-height: 1.7;
+		}
+ 
+		section {
+			position: relative; z-index: 1;
+			padding: 4rem 2rem;
+			max-width: 1100px; margin: 0 auto;
+		}
+		.section-label {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.65rem; letter-spacing: 0.35em;
+			color: var(--accent-teal); text-transform: uppercase;
+			margin-bottom: 0.75rem;
+		}
+		.section-title {
+			font-family: 'Orbitron', sans-serif;
+			font-size: clamp(1.4rem, 2.5vw, 2rem);
+			font-weight: 700; margin-bottom: 2.5rem;
+		}
+		.section-divider { border: none; border-top: 1px solid var(--border); max-width: 1100px; margin: 0 auto; }
+ 
+		/* BIRTHDAY PANEL */
+		.birthday-panel {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1.5rem;
+		}
+		@media (max-width: 700px) { .birthday-panel { grid-template-columns: 1fr; } }
+		.bday-main {
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 4px; padding: 2rem;
+			grid-column: 1 / -1;
+		}
+		.bday-date {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 2.5rem; font-weight: 900;
+			color: var(--bright-crimson);
+			margin-bottom: 0.5rem;
+		}
+		.bday-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim-star); }
+		.bday-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 4px; padding: 1.75rem;
+		}
+		.bday-card h3 {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.8rem; font-weight: 700;
+			color: var(--accent-teal);
+			text-transform: uppercase; letter-spacing: 0.1em;
+			margin-bottom: 1rem;
+		}
+		.bday-card p, .bday-card li {
+			font-size: 0.9rem; line-height: 1.8;
+			color: rgba(232,234,240,0.8);
+		}
+		.bday-card ul { list-style: none; }
+		.bday-card ul li::before { content: '▸ '; color: var(--bright-crimson); }
+ 
+		/* HOROSCOPE */
+		.horoscope-card {
+			background: linear-gradient(135deg, rgba(26,6,48,0.8), rgba(139,0,48,0.15));
+			border: 1px solid rgba(192,0,63,0.3);
+			border-radius: 4px; padding: 2.5rem;
+			display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: start;
+		}
+		.zodiac-symbol {
+			font-size: 4rem; line-height: 1;
+		}
+		.zodiac-name {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 1.8rem; font-weight: 900;
+			color: var(--bright-crimson); margin-bottom: 0.5rem;
+		}
+		.zodiac-dates {
+			font-size: 0.75rem; letter-spacing: 0.15em;
+			text-transform: uppercase; color: var(--dim-star);
+			margin-bottom: 1rem;
+		}
+		.zodiac-traits { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+		.trait-pill {
+			background: rgba(0,201,177,0.1);
+			border: 1px solid rgba(0,201,177,0.3);
+			color: var(--accent-teal);
+			padding: 0.25rem 0.75rem;
+			border-radius: 999px;
+			font-size: 0.75rem;
+			letter-spacing: 0.05em;
+		}
+		.zodiac-desc { font-size: 0.9rem; line-height: 1.8; color: rgba(232,234,240,0.75); }
+ 
+		/* PERSONALITY */
+		.personality-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 1.25rem;
+		}
+		.p-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 4px; padding: 1.5rem;
+			transition: border-color 0.2s, transform 0.2s;
+		}
+		.p-card:hover { border-color: rgba(0,201,177,0.3); transform: translateY(-3px); }
+		.p-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+		.p-trait {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.85rem; font-weight: 700;
+			color: var(--star-white); margin-bottom: 0.5rem;
+		}
+		.p-desc { font-size: 0.82rem; line-height: 1.6; color: var(--dim-star); }
+		.mbti-badge {
+			display: inline-block;
+			background: rgba(192,0,63,0.15);
+			border: 1px solid rgba(192,0,63,0.4);
+			color: var(--bright-crimson);
+			font-family: 'Orbitron', sans-serif;
+			font-size: 1.5rem; font-weight: 900;
+			padding: 0.75rem 2rem;
+			border-radius: 4px;
+			letter-spacing: 0.15em;
+			margin-bottom: 1.5rem;
+		}
+ 
+		/* FAMILY */
+		.family-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+			gap: 1.25rem;
+		}
+		.family-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 4px; padding: 1.5rem; text-align: center;
+		}
+		.family-avatar { font-size: 2.5rem; margin-bottom: 0.75rem; }
+		.family-role { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim-star); margin-bottom: 0.3rem; }
+		.family-name { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700; }
+ 
+		footer {
+			position: relative; z-index: 1;
+			border-top: 1px solid var(--border);
+			padding: 2rem; text-align: center;
+		}
+		footer p { font-size: 0.75rem; color: var(--dim-star); letter-spacing: 0.15em; text-transform: uppercase; }
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="index.html" class="nav-logo">AYDAN <span>N</span></a>
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li class="active"><a href="about.html">About</a></li>
+			<li><a href="projects.html">Projects</a></li>
+			<li><a href="blog.html">Blog</a></li>
+			<li><a href="contact.html">Contact</a></li>
+		</ul>
+	</nav>
+ 
+	<div class="page-hero">
+		<p class="eyebrow">Personal Dossier</p>
+		<h1>ABOUT ME</h1>
+		<p>Everything you want to know about Aydan Nelson — from birthday trivia to personality deep-dives.</p>
+	</div>
+ 
+	<!-- BIRTHDAY SECTION -->
+	<section>
+		<p class="section-label">Origin Story</p>
+		<h2 class="section-title">The Day I Was Born</h2>
+		<div class="birthday-panel">
+			<div class="bday-main">
+				<!-- PERSONALIZE: Replace with your actual birthday -->
+				<div class="bday-label">Date of Birth</div>
+				<div class="bday-date">June 24,2008</div>
+				<p style="color:var(--dim-star); font-size:0.9rem; margin-top:0.5rem;">
+					<!-- PERSONALIZE: Add a fun fact about your birth day/year, e.g. "It was a Tuesday. The #1 song was..." -->
+					
+				</p>
+			</div>
+			<div class="bday-card">
+				<h3>🌍 World Events That Day</h3>
+				<ul>
+					<!-- PERSONALIZE: Look up what happened in the news on your birthday -->
+					<li>iPhone 3G hits peak </li>
+					<li>Major news event #2 from your birthday</li>
+					<li>Popular movie in theaters</li>
+					<li>#1 song on the charts</li>
+				</ul>
+			</div>
+			<div class="bday-card">
+				<h3>👨‍👩‍👧 Family at the Time</h3>
+				<p>
+					<!-- PERSONALIZE: Write a sentence or two about your family when you were born -->
+					When I was born, my family included just my mom and dad I was the first born child
+				</p>
+			</div>
+			<div class="bday-card">
+				<h3>🎉 Fun Birthday Facts</h3>
+				<ul>
+					<!-- PERSONALIZE: Add fun facts about your birthday date -->
+					<li>Chris Pratt and Lionel Messi share this birthday</li>
+					<li>June 24th 2008 fell on a tuesday</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+ 
+	<hr class="section-divider">
+ 
+	<!-- HOROSCOPE -->
+	<section>
+		<p class="section-label">Celestial Identity</p>
+		<h2 class="section-title">My Horoscope</h2>
+		<div class="horoscope-card">
+			<div class="zodiac-symbol">
+				<!-- PERSONALIZE: Replace with your zodiac emoji -->
+				♋️
+			</div>
+			<div>
+				<!-- PERSONALIZE: Replace with YOUR zodiac sign -->
+				<div class="zodiac-name">Cancer</div>
+				<div class="zodiac-dates">June 21 – July 22</div>
+				<div class="zodiac-traits">
+					<!-- PERSONALIZE: Replace with traits from your actual zodiac sign -->
+					<span class="trait-pill">Emotional</span>
+					<span class="trait-pill">Loyal</span>
+					<span class="trait-pill">Protective</span>
+					<span class="trait-pill">intuitive</span>
+					<span class="trait-pill">Imaginative</span>
+				</div>
+				<p class="zodiac-desc">
+					<!-- PERSONALIZE: Write a paragraph about your zodiac sign and whether it fits you -->
+					My zodiac sign is Cancer. Cancers are often described as emotional, loyal, protective, intuitive, and home-oriented. I think this describes me well in some ways—I am definitely loyal to my friends and family, and I care a lot about making people feel safe and supported. I also relate to the intuitive side, as I often notice when someone is upset even if they don’t say anything.
+				</p>
+			</div>
+		</div>
+	</section>
+ 
+	<hr class="section-divider">
+ 
+	<!-- PERSONALITY TEST -->
+	<section>
+		<p class="section-label">Personality Matrix</p>
+		<h2 class="section-title">Personality Profile</h2>
+		<p style="color:var(--dim-star); margin-bottom:1.5rem; font-size:0.9rem;">
+			<!-- PERSONALIZE: Name the personality test you took -->
+			Results from the 16Personalities (MBTI) Test &amp; other assessments
+		</p>
+		<!-- PERSONALIZE: Replace with YOUR actual MBTI type -->
+		<div class="mbti-badge">ENTP</div>
+		<div class="personality-grid">
+			<!-- PERSONALIZE: Replace each card with your actual personality traits from the test -->
+			<div class="p-card">
+				<div class="p-icon">🔭</div>
+				<div class="p-trait">Extraverted</div>
+				<p class="p-desc">You likely get energized by social interaction and tend to openly express your enthusiasm and excitement.</p>
+			</div>
+			<div class="p-card">
+				<div class="p-icon">⚡</div>
+				<div class="p-trait">Intuitive</div>
+				<p class="p-desc">You’re likely very imaginative and open-minded, focusing on hidden meanings and distant possibilities.</p>
+			</div>
+			<div class="p-card">
+				<div class="p-icon">🛰️</div>
+				<div class="p-trait">Prospecting</div>
+				<p class="p-desc">You’re likely very adaptable, easygoing and flexible, prioritizing spontaneity over stability.</p>
+			</div>
+			<div class="p-card">
+				<div class="p-icon">🌌</div>
+				<div class="p-trait">Assertive</div>
+				<p class="p-desc">You’re likely self-assured, even-tempered, and resistant to stress, refusing to worry too much.</p>
+			</div>
+		</div>
+	</section>
+ 
+	<hr class="section-divider">
+ 
+	<!-- FAMILY -->
+	<section>
+		<p class="section-label">Base Station</p>
+		<h2 class="section-title">My Family</h2>
+		<div class="family-grid">
+			<!-- PERSONALIZE: Add/remove cards, change names and roles -->
+			<div class="family-card">
+				<div class="family-avatar">👤</div>
+				<div class="family-role">Parent</div>
+				<div class="family-name">Dad</div>
+			</div>
+			<div class="family-card">
+				<div class="family-avatar">👤</div>
+				<div class="family-role">Parent</div>
+				<div class="family-name">Mom</div>
+			</div>
+			<div class="family-card">
+				<div class="family-avatar">👤</div>
+				<div class="family-role">Sibling</div>
+				<div class="family-name">Jack</div>
+			</div>
+			<!-- Add more family members as needed -->
+		</div>
+	</section>
+ 
+	<footer>
+		<p>&copy; 2025 Aydan Nelson &nbsp;·&nbsp; Personal Website</p>
+	</footer>
+</body>
+</html>

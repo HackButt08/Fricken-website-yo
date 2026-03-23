@@ -1,0 +1,495 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Aydan Nelson</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--deep-space: #03040a;
+			--nebula-purple: #1a0630;
+			--crimson: #8b0030;
+			--bright-crimson: #c0003f;
+			--star-white: #e8eaf0;
+			--dim-star: #8899aa;
+			--accent-teal: #00c9b1;
+			--card-bg: rgba(255,255,255,0.04);
+			--border: rgba(255,255,255,0.08);
+		}
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		body {
+			background: var(--deep-space);
+			color: var(--star-white);
+			font-family: 'Exo 2', sans-serif;
+			overflow-x: hidden;
+		}
+		/* Starfield */
+		body::before {
+			content: '';
+			position: fixed;
+			inset: 0;
+			background-image:
+				radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+				radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+				radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.9) 0%, transparent 100%),
+				radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.6) 0%, transparent 100%),
+				radial-gradient(1px 1px at 85% 35%, rgba(255,255,255,0.7) 0%, transparent 100%),
+				radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
+				radial-gradient(1px 1px at 90% 55%, rgba(255,255,255,0.8) 0%, transparent 100%),
+				radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
+				radial-gradient(1px 1px at 25% 90%, rgba(255,255,255,0.6) 0%, transparent 100%),
+				radial-gradient(1px 1px at 60% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
+				radial-gradient(2px 2px at 5% 50%, rgba(200,220,255,0.5) 0%, transparent 100%),
+				radial-gradient(2px 2px at 80% 15%, rgba(200,220,255,0.4) 0%, transparent 100%),
+				radial-gradient(2px 2px at 55% 70%, rgba(200,220,255,0.3) 0%, transparent 100%);
+			pointer-events: none;
+			z-index: 0;
+		}
+ 
+		/* NAV */
+		nav {
+			position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+			background: rgba(3,4,10,0.85);
+			backdrop-filter: blur(12px);
+			border-bottom: 1px solid var(--border);
+			display: flex; align-items: center;
+			padding: 0 2rem;
+			height: 64px;
+		}
+		.nav-logo {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 1.1rem;
+			font-weight: 900;
+			color: var(--star-white);
+			text-decoration: none;
+			letter-spacing: 0.1em;
+			margin-right: auto;
+		}
+		.nav-logo span { color: var(--bright-crimson); }
+		nav ul { list-style: none; display: flex; gap: 0; }
+		nav ul li a {
+			display: block;
+			padding: 0 1.1rem;
+			line-height: 64px;
+			color: var(--dim-star);
+			text-decoration: none;
+			font-family: 'Exo 2', sans-serif;
+			font-size: 0.85rem;
+			font-weight: 600;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			transition: color 0.2s;
+		}
+		nav ul li a:hover, nav ul li.active a { color: var(--star-white); }
+		nav ul li.active a { border-bottom: 2px solid var(--bright-crimson); }
+ 
+		/* HERO */
+		.hero {
+			min-height: 100vh;
+			display: flex; flex-direction: column; justify-content: center; align-items: center;
+			text-align: center;
+			padding: 6rem 2rem 4rem;
+			position: relative;
+			background: radial-gradient(ellipse at 60% 40%, rgba(139,0,48,0.18) 0%, transparent 60%),
+						radial-gradient(ellipse at 20% 80%, rgba(26,6,48,0.6) 0%, transparent 50%);
+		}
+		.hero-orbit {
+			position: absolute;
+			width: 600px; height: 600px;
+			border: 1px solid rgba(255,255,255,0.06);
+			border-radius: 50%;
+			top: 50%; left: 50%;
+			transform: translate(-50%, -50%);
+			animation: spin 30s linear infinite;
+		}
+		.hero-orbit::after {
+			content: '';
+			position: absolute;
+			width: 8px; height: 8px;
+			background: var(--accent-teal);
+			border-radius: 50%;
+			top: -4px; left: 50%;
+			box-shadow: 0 0 12px var(--accent-teal);
+		}
+		@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+		.hero-tag {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.7rem;
+			letter-spacing: 0.3em;
+			color: var(--accent-teal);
+			text-transform: uppercase;
+			margin-bottom: 1.5rem;
+			opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+		}
+		.hero h1 {
+			font-family: 'Orbitron', sans-serif;
+			font-size: clamp(3rem, 8vw, 6rem);
+			font-weight: 900;
+			line-height: 1;
+			letter-spacing: -0.02em;
+			margin-bottom: 0.5rem;
+			opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+		}
+		.hero h1 span { color: var(--bright-crimson); }
+		.hero-sub {
+			font-size: 1.1rem;
+			color: var(--dim-star);
+			font-weight: 300;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			margin-bottom: 2.5rem;
+			opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+		}
+		.hero-bio {
+			max-width: 540px;
+			font-size: 1rem;
+			line-height: 1.8;
+			color: rgba(232,234,240,0.75);
+			margin-bottom: 2.5rem;
+			opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+		}
+		.hero-cta {
+			display: inline-flex; gap: 1rem;
+			opacity: 0; animation: fadeUp 0.8s 1s forwards;
+		}
+		.btn {
+			padding: 0.75rem 2rem;
+			font-family: 'Exo 2', sans-serif;
+			font-size: 0.85rem;
+			font-weight: 600;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			text-decoration: none;
+			border-radius: 2px;
+			transition: all 0.2s;
+		}
+		.btn-primary {
+			background: var(--crimson);
+			color: #fff;
+			border: 1px solid var(--crimson);
+		}
+		.btn-primary:hover { background: var(--bright-crimson); border-color: var(--bright-crimson); }
+		.btn-outline {
+			background: transparent;
+			color: var(--dim-star);
+			border: 1px solid var(--border);
+		}
+		.btn-outline:hover { border-color: var(--dim-star); color: var(--star-white); }
+ 
+		@keyframes fadeUp {
+			from { opacity: 0; transform: translateY(20px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+ 
+		/* SECTIONS */
+		section {
+			position: relative; z-index: 1;
+			padding: 5rem 2rem;
+			max-width: 1100px;
+			margin: 0 auto;
+		}
+		.section-label {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.65rem;
+			letter-spacing: 0.35em;
+			color: var(--accent-teal);
+			text-transform: uppercase;
+			margin-bottom: 0.75rem;
+		}
+		.section-title {
+			font-family: 'Orbitron', sans-serif;
+			font-size: clamp(1.5rem, 3vw, 2.2rem);
+			font-weight: 700;
+			margin-bottom: 3rem;
+			color: var(--star-white);
+		}
+		.section-divider {
+			border: none;
+			border-top: 1px solid var(--border);
+			max-width: 1100px;
+			margin: 0 auto;
+		}
+ 
+		/* QUICK FACTS */
+		.facts-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 1.5rem;
+		}
+		.fact-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			padding: 1.75rem 1.5rem;
+			border-radius: 4px;
+			transition: border-color 0.2s, transform 0.2s;
+		}
+		.fact-card:hover { border-color: rgba(192,0,63,0.4); transform: translateY(-3px); }
+		.fact-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+		.fact-label {
+			font-size: 0.65rem;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: var(--dim-star);
+			margin-bottom: 0.4rem;
+		}
+		.fact-value {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.95rem;
+			font-weight: 700;
+			color: var(--star-white);
+		}
+ 
+		/* CONTACT INFO */
+		.contact-row {
+			display: flex; flex-wrap: wrap; gap: 2rem;
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			padding: 2rem;
+			border-radius: 4px;
+			margin-bottom: 3rem;
+		}
+		.contact-item { display: flex; flex-direction: column; gap: 0.3rem; }
+		.contact-item .label {
+			font-size: 0.65rem;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: var(--dim-star);
+		}
+		.contact-item .value {
+			font-size: 0.95rem;
+			color: var(--star-white);
+		}
+ 
+		/* FAVORITES */
+		.favorites-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+			gap: 1.5rem;
+		}
+		.fav-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 4px;
+			overflow: hidden;
+			transition: border-color 0.2s, transform 0.2s;
+		}
+		.fav-card:hover { border-color: rgba(192,0,63,0.5); transform: translateY(-4px); }
+		.fav-img {
+			width: 100%;
+			aspect-ratio: 16/9;
+			object-fit: cover;
+			display: block;
+			background: var(--nebula-purple);
+			font-size: 3rem;
+			display: flex; align-items: center; justify-content: center;
+		}
+		.fav-emoji {
+			width: 100%;
+			aspect-ratio: 16/9;
+			background: linear-gradient(135deg, var(--nebula-purple), rgba(139,0,48,0.3));
+			display: flex; align-items: center; justify-content: center;
+			font-size: 3rem;
+		}
+		.fav-body { padding: 1.25rem; }
+		.fav-category {
+			font-size: 0.6rem;
+			letter-spacing: 0.25em;
+			text-transform: uppercase;
+			color: var(--accent-teal);
+			margin-bottom: 0.4rem;
+		}
+		.fav-title {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.9rem;
+			font-weight: 700;
+			margin-bottom: 0.5rem;
+		}
+		.fav-desc { font-size: 0.85rem; color: var(--dim-star); line-height: 1.6; }
+ 
+		/* FOOTER */
+		footer {
+			position: relative; z-index: 1;
+			border-top: 1px solid var(--border);
+			padding: 2rem;
+			text-align: center;
+		}
+		footer p {
+			font-size: 0.75rem;
+			color: var(--dim-star);
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+		}
+ 
+		/* MOBILE */
+		@media (max-width: 768px) {
+			nav ul { display: none; }
+			.hero-orbit { width: 300px; height: 300px; }
+		}
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="index.html" class="nav-logo">AYDAN <span>N</span></a>
+		<ul>
+			<li class="active"><a href="index.html">Home</a></li>
+			<li><a href="about.html">About</a></li>
+			<li><a href="projects.html">Projects</a></li>
+			<li><a href="blog.html">Blog</a></li>
+			<li><a href="contact.html">Contact</a></li>
+		</ul>
+	</nav>
+ 
+	<div class="hero">
+		<div class="hero-orbit"></div>
+		<p class="hero-tag">Personal Portfolio · Class of 2026</p>
+		<h1>AYDAN <span>NELSON</span></h1>
+		<p class="hero-sub">Student · Explorer · Creator</p>
+		<p class="hero-bio">
+			<!-- PERSONALIZE: Replace this with a 2-3 sentence intro about yourself -->
+			Welcome to my personal website! I'm a student with a passion for cybersecurity and computers.
+			Explore my projects, courses, hobbies, and travel plans using the navigation above.
+		</p>
+		<div class="hero-cta">
+			<a href="about.html" class="btn btn-primary">About Me</a>
+			<a href="projects.html" class="btn btn-outline">My Projects</a>
+		</div>
+	</div>
+ 
+	<hr class="section-divider">
+ 
+	<!-- CONTACT / QUICK INFO -->
+	<section>
+		<p class="section-label">Transmission Log</p>
+		<h2 class="section-title">Contact Info</h2>
+		<div class="contact-row">
+			<div class="contact-item">
+				<span class="label">Full Name</span>
+				<span class="value">Aydan Nelson</span>
+			</div>
+			<div class="contact-item">
+				<span class="label">School</span>
+				<span class="value"><!-- YOUR SCHOOL NAME --></span>
+			</div>
+			<div class="contact-item">
+				<span class="label">Grade</span>
+				<span class="value"><!-- YOUR GRADE --></span>
+			</div>
+			<div class="contact-item">
+				<span class="label">Email</span>
+				<span class="value"><!-- your.email@example.com --></span>
+			</div>
+			<div class="contact-item">
+				<span class="label">Location</span>
+				<span class="value">Menomonee Falls, WI</span>
+			</div>
+		</div>
+ 
+		<!-- QUICK FACTS -->
+		<p class="section-label">Mission Parameters</p>
+		<h2 class="section-title">Quick Facts</h2>
+		<div class="facts-grid">
+			<div class="fact-card">
+				<div class="fact-icon">🏃</div>
+				<div class="fact-label">Sports</div>
+				<!-- PERSONALIZE: replace with your sport(s) -->
+				<div class="fact-value">Track & Field</div>
+			</div>
+			<div class="fact-card">
+				<div class="fact-icon">🎭</div>
+				<div class="fact-label">Club #1</div>
+				<!-- PERSONALIZE -->
+				<div class="fact-value">Drama Club</div>
+			</div>
+			<div class="fact-card">
+				<div class="fact-icon">🎵</div>
+				<div class="fact-label">Hobby</div>
+				<!-- PERSONALIZE -->
+				<div class="fact-value">Playing Guitar</div>
+			</div>
+			<div class="fact-card">
+				<div class="fact-icon">📚</div>
+				<div class="fact-label">Favorite Subject</div>
+				<!-- PERSONALIZE -->
+				<div class="fact-value">Economics</div>
+			</div>
+			<div class="fact-card">
+				<div class="fact-icon">🌍</div>
+				<div class="fact-label">Dream Destination</div>
+				<!-- PERSONALIZE -->
+				<div class="fact-value">Japan</div>
+			</div>
+			<div class="fact-card">
+				<div class="fact-icon">🚀</div>
+				<div class="fact-label">Career Goal</div>
+				<!-- PERSONALIZE -->
+				<div class="fact-value">Engineer</div>
+			</div>
+		</div>
+	</section>
+ 
+	<hr class="section-divider">
+ 
+	<!-- FAVORITES -->
+	<section>
+		<p class="section-label">Stellar Objects</p>
+		<h2 class="section-title">Favorite Things</h2>
+		<div class="favorites-grid">
+			<!-- PERSONALIZE: Replace the emoji, category, title, and description for each card -->
+			<div class="fav-card">
+				<div class="fav-emoji">🎬</div>
+				<div class="fav-body">
+					<p class="fav-category">Favorite Movie</p>
+					<h3 class="fav-title">MOVIE TITLE HERE</h3>
+					<p class="fav-desc">Why you love it — what makes it your favorite?</p>
+				</div>
+			</div>
+			<div class="fav-card">
+				<div class="fav-emoji">🎵</div>
+				<div class="fav-body">
+					<p class="fav-category">Favorite Song / Artist</p>
+					<h3 class="fav-title">ARTIST / SONG HERE</h3>
+					<p class="fav-desc">What this music means to you or how it makes you feel.</p>
+				</div>
+			</div>
+			<div class="fav-card">
+				<div class="fav-emoji">🍕</div>
+				<div class="fav-body">
+					<p class="fav-category">Favorite Food</p>
+					<h3 class="fav-title">FOOD ITEM HERE</h3>
+					<p class="fav-desc">Where you like to get it or what makes it special.</p>
+				</div>
+			</div>
+			<div class="fav-card">
+				<div class="fav-emoji">📖</div>
+				<div class="fav-body">
+					<p class="fav-category">Favorite Book</p>
+					<h3 class="fav-title">BOOK TITLE HERE</h3>
+					<p class="fav-desc">A line or two about why this book sticks with you.</p>
+				</div>
+			</div>
+			<div class="fav-card">
+				<div class="fav-emoji">🎮</div>
+				<div class="fav-body">
+					<p class="fav-category">Favorite Game / Show</p>
+					<h3 class="fav-title">GAME OR SHOW TITLE</h3>
+					<p class="fav-desc">What you enjoy about it and how long you've been into it.</p>
+				</div>
+			</div>
+			<div class="fav-card">
+				<div class="fav-emoji">⚽</div>
+				<div class="fav-body">
+					<p class="fav-category">Favorite Sport to Watch</p>
+					<h3 class="fav-title">SPORT / TEAM HERE</h3>
+					<p class="fav-desc">Your favorite team or player and what you love about it.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+ 
+	<footer>
+		<p>&copy; 2025 Aydan Nelson &nbsp;·&nbsp; Personal Website &nbsp;·&nbsp; All Rights Reserved</p>
+	</footer>
+</body>
+</html>

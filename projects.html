@@ -1,0 +1,413 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Projects – Aydan Nelson</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--deep-space: #03040a;
+			--nebula-purple: #1a0630;
+			--crimson: #8b0030;
+			--bright-crimson: #c0003f;
+			--star-white: #e8eaf0;
+			--dim-star: #8899aa;
+			--accent-teal: #00c9b1;
+			--card-bg: rgba(255,255,255,0.04);
+			--border: rgba(255,255,255,0.08);
+		}
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		body {
+			background: var(--deep-space);
+			color: var(--star-white);
+			font-family: 'Exo 2', sans-serif;
+			overflow-x: hidden;
+		}
+		body::before {
+			content: '';
+			position: fixed; inset: 0;
+			background-image:
+				radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+				radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+				radial-gradient(1px 1px at 50% 65%, rgba(255,255,255,0.5) 0%, transparent 100%),
+				radial-gradient(2px 2px at 85% 75%, rgba(200,220,255,0.4) 0%, transparent 100%),
+				radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.4) 0%, transparent 100%);
+			pointer-events: none; z-index: 0;
+		}
+		nav {
+			position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+			background: rgba(3,4,10,0.85); backdrop-filter: blur(12px);
+			border-bottom: 1px solid var(--border);
+			display: flex; align-items: center;
+			padding: 0 2rem; height: 64px;
+		}
+		.nav-logo {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 1.1rem; font-weight: 900;
+			color: var(--star-white); text-decoration: none;
+			letter-spacing: 0.1em; margin-right: auto;
+		}
+		.nav-logo span { color: var(--bright-crimson); }
+		nav ul { list-style: none; display: flex; }
+		nav ul li a {
+			display: block; padding: 0 1.1rem; line-height: 64px;
+			color: var(--dim-star); text-decoration: none;
+			font-size: 0.85rem; font-weight: 600;
+			letter-spacing: 0.08em; text-transform: uppercase;
+			transition: color 0.2s;
+		}
+		nav ul li a:hover, nav ul li.active a { color: var(--star-white); }
+		nav ul li.active a { border-bottom: 2px solid var(--bright-crimson); }
+ 
+		.page-hero {
+			padding: 9rem 2rem 4rem; text-align: center;
+			background: radial-gradient(ellipse at 50% 0%, rgba(139,0,48,0.2) 0%, transparent 60%);
+			position: relative; z-index: 1;
+		}
+		.page-hero .eyebrow {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.65rem; letter-spacing: 0.35em;
+			color: var(--accent-teal); text-transform: uppercase; margin-bottom: 1rem;
+		}
+		.page-hero h1 {
+			font-family: 'Orbitron', sans-serif;
+			font-size: clamp(2.5rem, 6vw, 4.5rem);
+			font-weight: 900; line-height: 1; margin-bottom: 1rem;
+		}
+		.page-hero p { color: var(--dim-star); font-size: 1rem; max-width: 500px; margin: 0 auto; line-height: 1.7; }
+ 
+		section { position: relative; z-index: 1; padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+		.section-label {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.65rem; letter-spacing: 0.35em;
+			color: var(--accent-teal); text-transform: uppercase; margin-bottom: 0.75rem;
+		}
+		.section-title {
+			font-family: 'Orbitron', sans-serif;
+			font-size: clamp(1.4rem, 2.5vw, 2rem);
+			font-weight: 700; margin-bottom: 2.5rem;
+		}
+		.section-divider { border: none; border-top: 1px solid var(--border); max-width: 1100px; margin: 0 auto; }
+ 
+		/* COURSES TABLE */
+		.table-wrap {
+			overflow-x: auto;
+			border: 1px solid var(--border);
+			border-radius: 4px;
+		}
+		table {
+			width: 100%; border-collapse: collapse;
+			font-size: 0.88rem;
+		}
+		thead tr {
+			background: rgba(139,0,48,0.2);
+			border-bottom: 1px solid rgba(192,0,63,0.3);
+		}
+		thead th {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.65rem; font-weight: 700;
+			letter-spacing: 0.15em; text-transform: uppercase;
+			color: var(--accent-teal);
+			padding: 1rem 1.25rem; text-align: left;
+		}
+		tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+		tbody tr:last-child { border-bottom: none; }
+		tbody tr:hover { background: rgba(255,255,255,0.03); }
+		tbody td { padding: 1rem 1.25rem; color: rgba(232,234,240,0.85); line-height: 1.5; }
+		tbody td:first-child { font-weight: 600; color: var(--star-white); }
+		.level-badge {
+			display: inline-block;
+			padding: 0.2rem 0.6rem;
+			border-radius: 999px;
+			font-size: 0.7rem;
+			letter-spacing: 0.05em;
+			font-weight: 600;
+		}
+		.level-ap { background: rgba(192,0,63,0.15); border: 1px solid rgba(192,0,63,0.4); color: var(--bright-crimson); }
+		.level-honors { background: rgba(0,201,177,0.1); border: 1px solid rgba(0,201,177,0.3); color: var(--accent-teal); }
+		.level-reg { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--dim-star); }
+		.fav-tag {
+			display: inline-block;
+			font-size: 0.75rem; color: #ffd700;
+		}
+ 
+		/* SKILLS BAR */
+		.skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+		@media (max-width: 600px) { .skills-grid { grid-template-columns: 1fr; } }
+		.skill-item { margin-bottom: 0.25rem; }
+		.skill-top { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+		.skill-name { font-size: 0.85rem; font-weight: 600; }
+		.skill-pct { font-size: 0.75rem; color: var(--dim-star); }
+		.skill-bar { background: var(--border); height: 4px; border-radius: 999px; overflow: hidden; }
+		.skill-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--crimson), var(--bright-crimson)); }
+ 
+		/* FUTURE PLANS */
+		.plans-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1.5rem;
+		}
+		@media (max-width: 700px) { .plans-grid { grid-template-columns: 1fr; } }
+		.plan-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 4px; padding: 2rem;
+			transition: border-color 0.2s, transform 0.2s;
+		}
+		.plan-card:hover { border-color: rgba(192,0,63,0.4); transform: translateY(-3px); }
+		.plan-icon { font-size: 2rem; margin-bottom: 1rem; }
+		.plan-category {
+			font-size: 0.65rem; letter-spacing: 0.2em;
+			text-transform: uppercase; color: var(--accent-teal);
+			margin-bottom: 0.4rem;
+		}
+		.plan-title {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 1rem; font-weight: 700;
+			margin-bottom: 0.75rem;
+		}
+		.plan-desc { font-size: 0.88rem; line-height: 1.7; color: var(--dim-star); }
+ 
+		/* COLLEGE LIST */
+		.college-list { display: flex; flex-direction: column; gap: 1rem; }
+		.college-row {
+			display: flex; align-items: center; gap: 1.5rem;
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 4px; padding: 1.25rem 1.5rem;
+			transition: border-color 0.2s;
+		}
+		.college-row:hover { border-color: rgba(192,0,63,0.3); }
+		.college-emoji { font-size: 1.5rem; }
+		.college-info { flex: 1; }
+		.college-name { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+		.college-detail { font-size: 0.8rem; color: var(--dim-star); }
+		.college-status {
+			font-size: 0.7rem; letter-spacing: 0.1em;
+			text-transform: uppercase; padding: 0.25rem 0.75rem;
+			border-radius: 999px;
+		}
+		.status-dream { background: rgba(192,0,63,0.15); border: 1px solid rgba(192,0,63,0.4); color: var(--bright-crimson); }
+		.status-target { background: rgba(0,201,177,0.1); border: 1px solid rgba(0,201,177,0.3); color: var(--accent-teal); }
+		.status-safety { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--dim-star); }
+ 
+		footer {
+			position: relative; z-index: 1;
+			border-top: 1px solid var(--border);
+			padding: 2rem; text-align: center;
+		}
+		footer p { font-size: 0.75rem; color: var(--dim-star); letter-spacing: 0.15em; text-transform: uppercase; }
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="index.html" class="nav-logo">AYDAN <span>N</span></a>
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li><a href="about.html">About</a></li>
+			<li class="active"><a href="projects.html">Projects</a></li>
+			<li><a href="blog.html">Blog</a></li>
+			<li><a href="contact.html">Contact</a></li>
+		</ul>
+	</nav>
+ 
+	<div class="page-hero">
+		<p class="eyebrow">Academic Missions</p>
+		<h1>COURSES &amp; PLANS</h1>
+		<p>My current coursework, academic strengths, and plans for the future.</p>
+	</div>
+ 
+	<!-- COURSES TABLE -->
+	<section>
+		<p class="section-label">Current Semester</p>
+		<h2 class="section-title">Courses I'm Taking</h2>
+		<div class="table-wrap">
+			<table>
+				<thead>
+					<tr>
+						<th>Course Name</th>
+						<th>Level</th>
+						<th>Teacher</th>
+						<th>Period</th>
+						<th>Favorite?</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- PERSONALIZE: Replace each row with your actual courses -->
+					<tr>
+						<td>AP Calculus BC</td>
+						<td><span class="level-badge level-ap">AP</span></td>
+						<td>Mr.Eldredge</td>
+						<td>1st</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>H Advanced Programming</td>
+						<td><span class="level-badge level-honors">Honors</span></td>
+						<td>Ms.Larson</td>
+						<td>2nd</td>
+						<td><span class="fav-tag">⭐ Fav</span></td>
+					</tr>
+					<tr>
+						<td>STEM Academy Capstone</td>
+						<td><span class="level-badge level-reg">Regular</span></td>
+						<td>Mr. Eldredge</td>
+						<td>3rd</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>H Civil Engr & Arch PLTW </td>
+						<td><span class="level-badge level-honors">Honors</span></td>
+						<td>Mr.Mahlum</td>
+						<td>4th</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Tech Force Networking/td>
+						<td><span class="level-badge level-honors">Honors</span></td>
+						<td>Mr.Kania</td>
+						<td>5th</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>H AP CompSci Java S2 </td>
+						<td><span class="level-badge level-ap">AP</span></td>
+						<td>Ms.Larson</td>
+						<td>6th</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>H AP MacroEcon </td>
+						<td><span class="level-badge level-ap">AP</span></td>
+						<td>Ms.Butterbrodt</td>
+						<td>7th</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>The Novel and Film </td>
+						<td><span class="level-badge level-reg">Regular</span></td>
+						<td>Mr.Richmond</td>
+						<td>8th</td>
+						<td></td>
+					</tr>
+					<!-- Add more rows as needed -->
+				</tbody>
+			</table>
+		</div>
+	</section>
+ 
+	<hr class="section-divider">
+ 
+	<!-- ACADEMIC STRENGTHS -->
+	<section>
+		<p class="section-label">Subject Proficiency</p>
+		<h2 class="section-title">Academic Strengths</h2>
+		<!-- PERSONALIZE: Adjust the subject names and % values (out of 100) to reflect your strengths -->
+		<div class="skills-grid">
+			<div class="skill-item">
+				<div class="skill-top"><span class="skill-name">Economics / Social Studies</span><span class="skill-pct">90%</span></div>
+				<div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+			</div>
+			<div class="skill-item">
+				<div class="skill-top"><span class="skill-name">English / Writing</span><span class="skill-pct">80%</span></div>
+				<div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+			</div>
+			<div class="skill-item">
+				<div class="skill-top"><span class="skill-name">Math</span><span class="skill-pct">75%</span></div>
+				<div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+			</div>
+			<div class="skill-item">
+				<div class="skill-top"><span class="skill-name">Science</span><span class="skill-pct">70%</span></div>
+				<div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+			</div>
+		</div>
+	</section>
+ 
+	<hr class="section-divider">
+ 
+	<!-- FUTURE COLLEGE & CAREER -->
+	<section>
+		<p class="section-label">Launch Trajectory</p>
+		<h2 class="section-title">Future Plans</h2>
+		<div class="plans-grid">
+			<div class="plan-card">
+				<div class="plan-icon">🎓</div>
+				<div class="plan-category">College Major</div>
+				<!-- PERSONALIZE -->
+				<div class="plan-title">Cyber Security</div>
+				<p class="plan-desc">Cyber Security has been a loving passion of mine </p>
+			</div>
+			<div class="plan-card">
+				<div class="plan-icon">💼</div>
+				<div class="plan-category">Career Goal</div>
+				<!-- PERSONALIZE -->
+				<div class="plan-title">YOUR CAREER GOAL</div>
+				<p class="plan-desc">To work in Cyber Security for the government</p>
+			</div>
+			<div class="plan-card">
+				<div class="plan-icon">🌟</div>
+				<div class="plan-category">5-Year Goal</div>
+				<!-- PERSONALIZE -->
+				<div class="plan-title">WHERE YOU SEE YOURSELF</div>
+				<p class="plan-desc">Hopefully with a job in Cyber Security</p>
+			</div>
+			<div class="plan-card">
+				<div class="plan-icon">🛤️</div>
+				<div class="plan-category">Path to Get There</div>
+				<!-- PERSONALIZE -->
+				<div class="plan-title">YOUR PLAN</div>
+				<p class="plan-desc">Use the army to assist me in my career goals</p>
+			</div>
+		</div>
+	</section>
+ 
+	<hr class="section-divider">
+ 
+	<!-- COLLEGE LIST -->
+	<section>
+		<p class="section-label">Target Coordinates</p>
+		<h2 class="section-title">College List</h2>
+		<div class="college-list">
+			<!-- PERSONALIZE: Replace with your actual college list -->
+			<div class="college-row">
+				<div class="college-emoji">🏛️</div>
+				<div class="college-info">
+					<div class="college-name">GeorgiaTech</div>
+					<div class="college-detail">Atlanta, Georgia</div>
+				</div>
+				<span class="college-status status-dream">Dream</span>
+			</div>
+			<div class="college-row">
+				<div class="college-emoji">🎓</div>
+				<div class="college-info">
+					<div class="college-name">UW Madison</div>
+					<div class="college-detail">Madison, Wisconsin</div>
+				</div>
+				<span class="college-status status-target">Target</span>
+			</div>
+			<div class="college-row">
+				<div class="college-emoji">🎓</div>
+				<div class="college-info">
+					<div class="college-name">University of Michigan </div>
+					<div class="college-detail">Ann Harbor, Michigan</div>
+				</div>
+				<span class="college-status status-target">Target</span>
+			</div>
+			<div class="college-row">
+				<div class="college-emoji">🏫</div>
+				<div class="college-info">
+					<div class="college-name">UW Whitewater</div>
+					<div class="college-detail">Whitewater, Wisconsin</div>
+				</div>
+				<span class="college-status status-safety">Safety</span>
+			</div>
+		</div>
+	</section>
+ 
+	<footer>
+		<p>&copy; 2025 Aydan Nelson &nbsp;·&nbsp; Personal Website</p>
+	</footer>
+</body>
+</html>

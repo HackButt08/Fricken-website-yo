@@ -1,0 +1,371 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Blog – Aydan Nelson</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--deep-space: #03040a;
+			--nebula-purple: #1a0630;
+			--crimson: #8b0030;
+			--bright-crimson: #c0003f;
+			--star-white: #e8eaf0;
+			--dim-star: #8899aa;
+			--accent-teal: #00c9b1;
+			--card-bg: rgba(255,255,255,0.04);
+			--border: rgba(255,255,255,0.08);
+		}
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		body {
+			background: var(--deep-space);
+			color: var(--star-white);
+			font-family: 'Exo 2', sans-serif;
+			overflow-x: hidden;
+		}
+		body::before {
+			content: '';
+			position: fixed; inset: 0;
+			background-image:
+				radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.7) 0%, transparent 100%),
+				radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+				radial-gradient(1px 1px at 75% 30%, rgba(255,255,255,0.8) 0%, transparent 100%),
+				radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+				radial-gradient(2px 2px at 55% 85%, rgba(200,220,255,0.4) 0%, transparent 100%);
+			pointer-events: none; z-index: 0;
+		}
+		nav {
+			position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+			background: rgba(3,4,10,0.85); backdrop-filter: blur(12px);
+			border-bottom: 1px solid var(--border);
+			display: flex; align-items: center;
+			padding: 0 2rem; height: 64px;
+		}
+		.nav-logo {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 1.1rem; font-weight: 900;
+			color: var(--star-white); text-decoration: none;
+			letter-spacing: 0.1em; margin-right: auto;
+		}
+		.nav-logo span { color: var(--bright-crimson); }
+		nav ul { list-style: none; display: flex; }
+		nav ul li a {
+			display: block; padding: 0 1.1rem; line-height: 64px;
+			color: var(--dim-star); text-decoration: none;
+			font-size: 0.85rem; font-weight: 600;
+			letter-spacing: 0.08em; text-transform: uppercase;
+			transition: color 0.2s;
+		}
+		nav ul li a:hover, nav ul li.active a { color: var(--star-white); }
+		nav ul li.active a { border-bottom: 2px solid var(--bright-crimson); }
+ 
+		.page-hero {
+			padding: 9rem 2rem 4rem; text-align: center;
+			background: radial-gradient(ellipse at 50% 0%, rgba(139,0,48,0.2) 0%, transparent 60%);
+			position: relative; z-index: 1;
+		}
+		.page-hero .eyebrow {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.65rem; letter-spacing: 0.35em;
+			color: var(--accent-teal); text-transform: uppercase; margin-bottom: 1rem;
+		}
+		.page-hero h1 {
+			font-family: 'Orbitron', sans-serif;
+			font-size: clamp(2.5rem, 6vw, 4.5rem);
+			font-weight: 900; line-height: 1; margin-bottom: 1rem;
+		}
+		.page-hero p { color: var(--dim-star); font-size: 1rem; max-width: 500px; margin: 0 auto; line-height: 1.7; }
+ 
+		section { position: relative; z-index: 1; padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+		.section-label {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.65rem; letter-spacing: 0.35em;
+			color: var(--accent-teal); text-transform: uppercase; margin-bottom: 0.75rem;
+		}
+		.section-title {
+			font-family: 'Orbitron', sans-serif;
+			font-size: clamp(1.4rem, 2.5vw, 2rem);
+			font-weight: 700; margin-bottom: 2.5rem;
+		}
+		.section-divider { border: none; border-top: 1px solid var(--border); max-width: 1100px; margin: 0 auto; }
+ 
+		/* TRAVEL MAP CARDS */
+		.travel-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+			gap: 1.5rem;
+		}
+		.travel-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 4px; overflow: hidden;
+			transition: border-color 0.2s, transform 0.2s;
+		}
+		.travel-card:hover { border-color: rgba(192,0,63,0.5); transform: translateY(-4px); }
+		.travel-img-placeholder {
+			width: 100%; aspect-ratio: 16/9;
+			background: linear-gradient(135deg, var(--nebula-purple), rgba(139,0,48,0.4));
+			display: flex; align-items: center; justify-content: center;
+			font-size: 3.5rem; position: relative;
+		}
+		.travel-img-placeholder img {
+			position: absolute; inset: 0;
+			width: 100%; height: 100%; object-fit: cover;
+		}
+		.visited-badge {
+			position: absolute; top: 0.75rem; right: 0.75rem;
+			font-size: 0.65rem; letter-spacing: 0.1em;
+			text-transform: uppercase; padding: 0.25rem 0.6rem;
+			border-radius: 999px; font-weight: 600;
+		}
+		.been { background: rgba(0,201,177,0.2); border: 1px solid rgba(0,201,177,0.5); color: var(--accent-teal); }
+		.want { background: rgba(192,0,63,0.2); border: 1px solid rgba(192,0,63,0.5); color: var(--bright-crimson); }
+		.travel-body { padding: 1.25rem; }
+		.travel-location {
+			font-size: 0.65rem; letter-spacing: 0.2em;
+			text-transform: uppercase; color: var(--dim-star); margin-bottom: 0.4rem;
+		}
+		.travel-name {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem;
+		}
+		.travel-desc { font-size: 0.85rem; color: var(--dim-star); line-height: 1.6; }
+		.travel-link {
+			display: inline-block; margin-top: 0.75rem;
+			font-size: 0.75rem; color: var(--accent-teal);
+			text-decoration: none; letter-spacing: 0.1em;
+			text-transform: uppercase; transition: color 0.2s;
+		}
+		.travel-link:hover { color: var(--star-white); }
+ 
+		/* HOBBIES */
+		.hobbies-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+			gap: 1.25rem;
+		}
+		.hobby-card {
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 4px; padding: 1.75rem;
+			transition: border-color 0.2s, transform 0.2s;
+		}
+		.hobby-card:hover { border-color: rgba(0,201,177,0.3); transform: translateY(-3px); }
+		.hobby-icon { font-size: 2rem; margin-bottom: 1rem; }
+		.hobby-type {
+			font-size: 0.6rem; letter-spacing: 0.2em;
+			text-transform: uppercase; color: var(--accent-teal); margin-bottom: 0.35rem;
+		}
+		.hobby-name {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.9rem; font-weight: 700; margin-bottom: 0.6rem;
+		}
+		.hobby-desc { font-size: 0.83rem; line-height: 1.6; color: var(--dim-star); }
+		.hobby-since {
+			display: inline-block; margin-top: 0.75rem;
+			font-size: 0.7rem; color: var(--dim-star);
+			letter-spacing: 0.1em; text-transform: uppercase;
+		}
+ 
+		/* ACTIVITY LIST */
+		.activity-list { display: flex; flex-direction: column; gap: 1rem; }
+		.activity-row {
+			display: flex; align-items: flex-start; gap: 1.5rem;
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 4px; padding: 1.5rem;
+			transition: border-color 0.2s;
+		}
+		.activity-row:hover { border-color: rgba(192,0,63,0.3); }
+		.activity-icon { font-size: 1.75rem; flex-shrink: 0; margin-top: 0.1rem; }
+		.activity-info { flex: 1; }
+		.activity-name {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.9rem; font-weight: 700; margin-bottom: 0.35rem;
+		}
+		.activity-desc { font-size: 0.85rem; color: var(--dim-star); line-height: 1.6; }
+		.activity-tag {
+			flex-shrink: 0;
+			font-size: 0.65rem; letter-spacing: 0.1em;
+			text-transform: uppercase; padding: 0.25rem 0.75rem;
+			border-radius: 999px;
+			align-self: flex-start;
+		}
+		.tag-sport { background: rgba(192,0,63,0.15); border: 1px solid rgba(192,0,63,0.4); color: var(--bright-crimson); }
+		.tag-club { background: rgba(0,201,177,0.1); border: 1px solid rgba(0,201,177,0.3); color: var(--accent-teal); }
+		.tag-hobby { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--dim-star); }
+ 
+		footer {
+			position: relative; z-index: 1;
+			border-top: 1px solid var(--border);
+			padding: 2rem; text-align: center;
+		}
+		footer p { font-size: 0.75rem; color: var(--dim-star); letter-spacing: 0.15em; text-transform: uppercase; }
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="index.html" class="nav-logo">AYDAN <span>N</span></a>
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li><a href="about.html">About</a></li>
+			<li><a href="projects.html">Projects</a></li>
+			<li class="active"><a href="blog.html">Blog</a></li>
+			<li><a href="contact.html">Contact</a></li>
+		</ul>
+	</nav>
+ 
+	<div class="page-hero">
+		<p class="eyebrow">Exploration Log</p>
+		<h1>TRAVEL &amp; HOBBIES</h1>
+		<p>Places I've been, places I want to go, and the activities that make up my world.</p>
+	</div>
+ 
+	<!-- TRAVEL SECTION -->
+	<section>
+		<p class="section-label">Galactic Coordinates</p>
+		<h2 class="section-title">Favorite Places &amp; Travel Wishlist</h2>
+		<div class="travel-grid">
+			<!-- PERSONALIZE: Replace each card with your real traveled / want-to-visit places.
+			     For visited: add class "been" to badge. For wishlist: add class "want".
+			     Add a real image URL in the <img> tag, or remove the <img> to show the emoji. -->
+ 
+			<div class="travel-card">
+				<div class="travel-img-placeholder">
+					🗾
+					<span class="visited-badge want">Want to Visit</span>
+					<!-- <img src="YOUR_IMAGE_URL_HERE" alt="Japan"> -->
+				</div>
+				<div class="travel-body">
+					<p class="travel-location">Asia</p>
+					<h3 class="travel-name">JAPAN</h3>
+					
+					<!-- Optional: add a link to a tourism site -->
+					<!-- <a href="https://www.japan.travel/en/" class="travel-link" target="_blank">Learn More →</a> -->
+				</div>
+			</div>
+ 
+			<div class="travel-card">
+				<div class="travel-img-placeholder">
+					🗺️
+					<span class="visited-badge been">Been There</span>
+				</div>
+				<div class="travel-body">
+					<p class="travel-location"><!-- Continent / Region --></p>
+					<h3 class="travel-name">Siesta Keys, FL</h3>
+					
+				</div>
+			</div>
+ 
+			<div class="travel-card">
+				<div class="travel-img-placeholder">
+					🏔️
+					<span class="visited-badge want">Want to Visit</span>
+				</div>
+				<div class="travel-body">
+					<p class="travel-location"><!-- Continent / Region --></p>
+					<h3 class="travel-name">Glacier, Montana</h3>
+					
+				</div>
+			</div>
+ 
+			<div class="travel-card">
+				<div class="travel-img-placeholder">
+					🏖️
+					<span class="visited-badge been">Been There</span>
+				</div>
+				<div class="travel-body">
+					<p class="travel-location"><!-- Continent / Region --></p>
+					<h3 class="travel-name">California</h3>
+					
+				</div>
+			</div>
+ 
+			<!-- Add more travel cards as needed -->
+		</div>
+	</section>
+ 
+	<hr class="section-divider">
+ 
+	<!-- SPORTS, CLUBS, HOBBIES -->
+	<section>
+		<p class="section-label">Mission Activities</p>
+		<h2 class="section-title">Sports, Clubs &amp; Hobbies</h2>
+		<div class="activity-list">
+			<!-- PERSONALIZE: Replace each row with your actual sports, clubs, and hobbies -->
+			<div class="activity-row">
+				<div class="activity-icon">🏃</div>
+				<div class="activity-info">
+					<div class="activity-name">Basketball</div>
+					<p class="activity-desc">Freshman-Junoir Rec</p>
+				</div>
+				<span class="activity-tag tag-sport">Sport</span>
+			</div>
+ 
+			<div class="activity-row">
+				<div class="activity-icon">🎭</div>
+				<div class="activity-info">
+					<div class="activity-name">Rock Climbing</div>
+					<p class="activity-desc">Senoir</p>
+				</div>
+				<span class="activity-tag tag-club">Club</span>
+			</div>
+ 
+			<div class="activity-row">
+				<div class="activity-icon">🎵</div>
+				<div class="activity-info">
+					<div class="activity-name">Listening to music</div>
+					<p class="activity-desc">Avid music rater </p>
+				</div>
+				<span class="activity-tag tag-hobby">Hobby</span>
+			</div>
+ 
+			
+ 
+			<!-- Add more rows as needed -->
+		</div>
+	</section>
+ 
+	<hr class="section-divider">
+ 
+	<!-- DETAILED HOBBY SPOTLIGHT -->
+	<section>
+		<p class="section-label">Hobby Deep Dive</p>
+		<h2 class="section-title">My Interests Up Close</h2>
+		<div class="hobbies-grid">
+			<!-- PERSONALIZE: Replace each card with your actual hobbies with more detail -->
+			<div class="hobby-card">
+				<div class="hobby-icon">🎸</div>
+				<div class="hobby-type">Hobby</div>
+				<div class="hobby-name">Going to Music Shows</div>
+				<p class="hobby-desc">Going to music show is one of my favorite things to do with friends</p>
+				<span class="hobby-since">Since: YEAR</span>
+			</div>
+ 
+			<div class="hobby-card">
+				<div class="hobby-icon">📸</div>
+				<div class="hobby-type">Hobby</div>
+				<div class="hobby-name">Pictures</div>
+				<p class="hobby-desc">I like taking pictures of the cool places that I go with my friends</p>
+				<span class="hobby-since">Since: YEAR</span>
+			</div>
+ 
+			<div class="hobby-card">
+				<div class="hobby-icon">🎮</div>
+				<div class="hobby-type">Hobby</div>
+				<div class="hobby-name">Video games</div>
+				<p class="hobby-desc">I love playing video games with my friends</p>
+				<span class="hobby-since">Since: YEAR</span>
+			</div>
+ 
+			<!-- Add more hobby cards as needed -->
+		</div>
+	</section>
+ 
+	<footer>
+		<p>&copy; 2025 Aydan Nelson &nbsp;·&nbsp; Personal Website</p>
+	</footer>
+</body>
+</html>
